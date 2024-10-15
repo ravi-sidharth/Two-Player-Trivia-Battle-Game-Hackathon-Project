@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HVA Mini Hackathon 2.0 - Two-Player Trivia Battle Game</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <div class="main-container">
+        <h1>Two Player Trivia Battle Game</h1>
+        <div>
+            <form id="player-form" action="./">
+                <input type="text" id="player1" placeholder="Enter Player1 Name" required>
+                <input type="text" id="player2" placeholder="Enter Player2 Name" required>
+                <button id="form-submit">Submit</button>
+            </form>
+        </div>
+        <div id="category-select">
+            <h2>Select any one of the category for start playing game</h2>
+            <select id="categories">
+                <option value="Choose the category">Choose the category</option>
+                <option value="general_knowledge">General Knowlege</option>
+                <option value="geography" >Geography</option>
+                <option value="science" >Science</option>
+                <option value="society_and_culture">Society and Culture
+                </option>
+                <option value="film_and_tv" >Film and TV</option>
+                <option value="food_and_drink" >Food and Drink</option>
+                <option value="arts_and_culture" >arts and culture</option>
+                <option value="sport_and_leisure">sport and leisure</option>
+                <option value="music">Music</option>
+                <option value="history">History</option>
+            </select>
+        </div>
+        <div id="question-container"></div>
+    </div>
+
+</body>
+<script src="./app.js"></script>
+
+</html>
+

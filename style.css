@@ -1,0 +1,27 @@
+#category-select {
+    display: none;
+    background-color: grey;
+    border-radius:5px;
+}
+
+
+body {
+    display: flex;
+    justify-content: center;
+}
+
+#question-container {
+   background-color: grey;
+   box-shadow: 1px 1px 8px grey;
+   border-radius:5px;
+}
+
+li { 
+    margin-bottom: .7rem;
+}
+
+li:hover{
+    background-color:aqua;
+    color: black;
+
+}
