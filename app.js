@@ -20,7 +20,7 @@ async function getData(category, difficulties) {
     currentCategory = category
     playedCategories.push(category);
     // console.log(data)
-    bindData(data);
+    showQuestion(data);
 }
 
 const formSubmitBtn = document.querySelector('#player-form');
@@ -47,7 +47,7 @@ categorySelect.addEventListener('change', (event) => {
 
 const questionContainer = document.getElementById('question-container');
 
-function bindData(data) {
+function showQuestion(data) {
     questionContainer.innerHTML = "";
     // console.log(data,count)
     const player = document.createElement('h2')
@@ -179,7 +179,7 @@ function showAgainQuestion() {
         h1.style.fontSize = "2rem"
         questionContainer.appendChild(h1)
         StartGameAgainIntervalID = setInterval(() => {
-            alert("Time is over! Quickly Select new category which you want to play next!");
+            alert("Time is over!Please Select new category which you want to play next!");
         }, 10000)
 
     } else {
