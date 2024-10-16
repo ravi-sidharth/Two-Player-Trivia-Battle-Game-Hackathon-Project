@@ -183,10 +183,11 @@ function showAgainQuestion() {
         }, 10000)
 
     } else {
-        alert("You already played all category option!, There is no more category to play this game and this game is over");
+        alert("You already played all category option!, There is no more category to play this game");
         setTimeout(() => {
+            alert("You have completed all the level")
             reload()
-        }, 2000)
+        }, 4000)
 
     }
 }
