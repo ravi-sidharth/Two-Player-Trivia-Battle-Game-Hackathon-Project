@@ -12,7 +12,7 @@ let player2Name = ""
 let questionBank = []
 let highScore = 0
 let StartGameAgainIntervalID = ""
-let winner =""
+let winner = ""
 
 async function getData(category, difficulties) {
     const res = await fetch(`https://the-trivia-api.com/v2/questions?limit=1&categories=${category}&difficulties=${difficulties}`);
@@ -42,7 +42,7 @@ categorySelect.addEventListener('change', (event) => {
     if (StartGameAgainIntervalID) {
         clearInterval(StartGameAgainIntervalID);
     }
-    getData(selectedCategory,easy);
+    getData(selectedCategory, easy);
 });
 
 const questionContainer = document.getElementById('question-container');
@@ -76,11 +76,9 @@ function bindData(data) {
         optionList.appendChild(list);
         questionContainer.appendChild(optionList)
 
-        // question par click karne ke baad ka behavior write or wrong answer
+        // addEvent listener in option option is right or worng
         list.addEventListener('click', () => {
             console.log(`Selected answer: ${option}`);
-            // const correctAnswer = document.createElement('h2')
-            // const incorrectAnswer = document.createElement('h2')
 
             if (count % 2 == 0) {
                 if (option == data[0].correctAnswer) {
@@ -89,12 +87,11 @@ function bindData(data) {
                     player.innerText = `Weldone your Answer is correct and now your score is ${player1Score}`;
                     player.style.color = "green";
 
-                    // questionContainer.prepend(correctAnswer)
                 } else {
                     // console.log("Incorrect answer.");
                     player.innerText = `Your answer is incorrect and correct answer is ${data[0].correctAnswer}`;
                     player.style.color = "red";
-                    // questionContainer.prepend(incorrectAnswer)
+
                 }
             } else {
                 if (option == data[0].correctAnswer) {
@@ -103,7 +100,6 @@ function bindData(data) {
                     // console.log(dummyScore)
                     // console.log(count)
                     player.innerText = `Weldone your Answer is correct and now your score is ${player2Score}`;
-                    // questionContainer.prepend(correctAnswer)
                     player.style.color = "green";
 
                 } else {
@@ -133,14 +129,14 @@ function bindData(data) {
 
 const finalScore = document.createElement('h2');
 
-function endGame(){
+function endGame() {
     questionContainer.innerText = ""
     if (player1Score > player2Score) {
         highScore = player1Score
-        winner=player1Name
+        winner = player1Name
     } else {
         highScore = player2Score
-        winner= player2Name
+        winner = player2Name
     }
     finalScore.innerText = `Game Over! Player 1: ${player1Score}, Player 2: ${player2Score}, High Score: ${highScore} and Winner is ${winner}`;
     questionContainer.appendChild(finalScore);
@@ -152,24 +148,24 @@ function endGame(){
     questionContainer.appendChild(gameContinue);
     questionContainer.appendChild(gameEnd);
 
-    // game ko dobara use karne ke liye ye use kiya he 
+    // if user wants to play again then he can play
     gameContinue.addEventListener('click', () => {
         count = 0;
         player1Score = 0;
         player2Score = 0;
-        winner=""
+        winner = ""
         showAgainQuestion()
     })
-    // game ko end karne ke liye mene ye use kiya he 
+    // user wants to end the game 
     gameEnd.addEventListener('click', () => {
         reload();
     })
-       
-    }
+
+}
 
 function showAgainQuestion() {
     const selectElement = document.getElementById('categories');
-    for (let i =0; i<selectElement.options.length; i++) {
+    for (let i = 0; i < selectElement.options.length; i++) {
         for (let j = 0; j < playedCategories.length; j++) {
             if (selectElement.options[i].value == playedCategories[j]) {
                 selectElement.remove(i)
@@ -184,16 +180,16 @@ function showAgainQuestion() {
         questionContainer.appendChild(h1)
         StartGameAgainIntervalID = setInterval(() => {
             alert("Time is over! Quickly Select new category which you want to play next!");
-        },10000)
+        }, 10000)
 
     } else {
         alert("You already played all category option!, There is no more category to play this game and this game is over");
-        setTimeout(()=>{
-            reload()  
-        },2000)
-        
+        setTimeout(() => {
+            reload()
+        }, 2000)
+
     }
-    }
+}
 
 function reload() {
     window.location.reload()
