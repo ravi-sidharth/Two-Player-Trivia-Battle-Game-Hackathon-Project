@@ -1,4 +1,3 @@
-
 let easy = "easy"
 let medium = "medium"
 let hard = "hard"
@@ -11,11 +10,8 @@ let currentCategory = ""
 let player1Name = ""
 let player2Name = ""
 let questionBank = []
+let highScore = 0
 let StartGameAgainIntervalID = ""
-
-function reload() {
-    window.location.reload()
-}
 
 async function getData(category, difficulties) {
     const res = await fetch(`https://the-trivia-api.com/v2/questions?limit=1&categories=${category}&difficulties=${difficulties}`);
@@ -48,45 +44,10 @@ categorySelect.addEventListener('change', (event) => {
     getData(selectedCategory,easy);
 });
 
+const questionContainer = document.getElementById('question-container');
+
 function bindData(data) {
-    const questionContainer = document.getElementById('question-container');
-
     questionContainer.innerHTML = "";
-    const finalScore = document.createElement('h2');
-
-    let highScore = 0
-    if (count >= 6) {
-        if (player1Score > player2Score) {
-            highScore = player1Score
-        } else {
-            highScore = player2Score
-        }
-        finalScore.innerText = `Game Over! Player 1: ${player1Score}, Player 2: ${player2Score}, High Score: ${highScore}`;
-        questionContainer.appendChild(finalScore);
-
-        const gameContinue = document.createElement('button');
-        const gameEnd = document.createElement('button');
-        gameContinue.innerText = "Play Again";
-        gameEnd.innerText = "End Game"
-        questionContainer.appendChild(gameContinue);
-        questionContainer.appendChild(gameEnd);
-
-        // game ko dobara use karne ke liye ye use kiya he 
-        gameContinue.addEventListener('click', () => {
-            count = 0;
-            player1Score = 0;
-            player2Score = 0;
-            showAgainQuestion()
-        })
-
-        // game ko end karne ke liye mene ye use kiya he 
-        gameEnd.addEventListener('click', () => {
-            reload();
-        })
-        // ye isliye lagaya he ki 6 question ke 7 question naa aye
-        return 
-    }
-
     // console.log(data,count)
     const player = document.createElement('h2')
     player.style.color = "yellow";
@@ -129,7 +90,7 @@ function bindData(data) {
 
                     // questionContainer.prepend(correctAnswer)
                 } else {
-                    console.log("Incorrect answer.");
+                    // console.log("Incorrect answer.");
                     player.innerText = `Your answer is incorrect and correct answer is ${data[0].correctAnswer}`;
                     player.style.color = "red";
                     // questionContainer.prepend(incorrectAnswer)
@@ -161,37 +122,69 @@ function bindData(data) {
                 } else if (count >= 4 && count < 6) {
                     getData(currentCategory, hard);
                 } else {
-                    bindData(data)
+                    endGame()
                 }
             }, 1000);
-
         });
     });
+}
 
-    function showAgainQuestion() {
-        const selectElement = document.getElementById('categories');
-        for (let i = selectElement.options.length - 1; i >= 0; i--) {
-            for (let j = 0; j < playedCategories.length; j++) {
-                if (selectElement.options[i].value == playedCategories[j]) {
-                    selectElement.remove(i)
-                }
+function showAgainQuestion() {
+    const selectElement = document.getElementById('categories');
+    for (let i =0; i<selectElement.options.length; i++) {
+        for (let j = 0; j < playedCategories.length; j++) {
+            if (selectElement.options[i].value == playedCategories[j]) {
+                selectElement.remove(i)
             }
         }
-        if (selectElement.options.length > 0) {
-            questionContainer.innerText = ""
-            const h1 = document.createElement('h1')
-            h1.innerText = "Select category within 10 Second"
-            h1.style.fontSize = "2rem"
-            questionContainer.appendChild(h1)
-            StartGameAgainIntervalID = setInterval(() => {
-                alert("Time is over! Quickly Select new category which you want to play next!");
-            }, 10000)
+    }
+    if (selectElement.options.length > 0) {
+        questionContainer.innerText = ""
+        const h1 = document.createElement('h1')
+        h1.innerText = "Select new category which you want to play next within 10 Second"
+        h1.style.fontSize = "2rem"
+        questionContainer.appendChild(h1)
+        StartGameAgainIntervalID = setInterval(() => {
+            alert("Time is over! Quickly Select new category which you want to play next!");
+        },10000)
 
-        } else {
-            console.error("No categories is available to select here!");
-        }
+    } else {
+        console.error("No categories is available to select here!");
+    }
+}
+const finalScore = document.createElement('h2');
 
+function endGame(){
+    questionContainer.innerText = ""
+    if (player1Score > player2Score) {
+        highScore = player1Score
+    } else {
+        highScore = player2Score
+    }
+    finalScore.innerText = `Game Over! Player 1: ${player1Score}, Player 2: ${player2Score}, High Score: ${highScore}`;
+    questionContainer.appendChild(finalScore);
+
+    const gameContinue = document.createElement('button');
+    const gameEnd = document.createElement('button');
+    gameContinue.innerText = "Play Again";
+    gameEnd.innerText = "End Game"
+    questionContainer.appendChild(gameContinue);
+    questionContainer.appendChild(gameEnd);
+
+    // game ko dobara use karne ke liye ye use kiya he 
+    gameContinue.addEventListener('click', () => {
+        count = 0;
+        player1Score = 0;
+        player2Score = 0;
+        showAgainQuestion()
+    })
+    // game ko end karne ke liye mene ye use kiya he 
+    gameEnd.addEventListener('click', () => {
+        reload();
+    })
+       
     }
 
-
+function reload() {
+    window.location.reload()
 }
