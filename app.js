@@ -105,7 +105,6 @@ function showQuestion(data) {
                 } else {
                     console.log("Incorrect answer.");
                     player.innerText = `Your answer is incorrect and correct answer is ${data[0].correctAnswer}`;
-                    // questionContainer.prepend(incorrectAnswer)
                     player.style.color = "red";
                 }
             }
