@@ -12,6 +12,7 @@ let player2Name = ""
 let questionBank = []
 let highScore = 0
 let StartGameAgainIntervalID = ""
+let winner =""
 
 async function getData(category, difficulties) {
     const res = await fetch(`https://the-trivia-api.com/v2/questions?limit=1&categories=${category}&difficulties=${difficulties}`);
@@ -129,39 +130,19 @@ function bindData(data) {
     });
 }
 
-function showAgainQuestion() {
-    const selectElement = document.getElementById('categories');
-    for (let i =0; i<selectElement.options.length; i++) {
-        for (let j = 0; j < playedCategories.length; j++) {
-            if (selectElement.options[i].value == playedCategories[j]) {
-                selectElement.remove(i)
-            }
-        }
-    }
-    if (selectElement.options.length > 0) {
-        questionContainer.innerText = ""
-        const h1 = document.createElement('h1')
-        h1.innerText = "Select new category which you want to play next within 10 Second"
-        h1.style.fontSize = "2rem"
-        questionContainer.appendChild(h1)
-        StartGameAgainIntervalID = setInterval(() => {
-            alert("Time is over! Quickly Select new category which you want to play next!");
-        },10000)
 
-    } else {
-        console.error("No categories is available to select here!");
-    }
-}
 const finalScore = document.createElement('h2');
 
 function endGame(){
     questionContainer.innerText = ""
     if (player1Score > player2Score) {
         highScore = player1Score
+        winner=player1Name
     } else {
         highScore = player2Score
+        winner= player2Name
     }
-    finalScore.innerText = `Game Over! Player 1: ${player1Score}, Player 2: ${player2Score}, High Score: ${highScore}`;
+    finalScore.innerText = `Game Over! Player 1: ${player1Score}, Player 2: ${player2Score}, High Score: ${highScore} and Winner is ${winner}`;
     questionContainer.appendChild(finalScore);
 
     const gameContinue = document.createElement('button');
@@ -176,6 +157,7 @@ function endGame(){
         count = 0;
         player1Score = 0;
         player2Score = 0;
+        winner=""
         showAgainQuestion()
     })
     // game ko end karne ke liye mene ye use kiya he 
@@ -183,6 +165,34 @@ function endGame(){
         reload();
     })
        
+    }
+
+function showAgainQuestion() {
+    const selectElement = document.getElementById('categories');
+    for (let i =0; i<selectElement.options.length; i++) {
+        for (let j = 0; j < playedCategories.length; j++) {
+            if (selectElement.options[i].value == playedCategories[j]) {
+                selectElement.remove(i)
+            }
+        }
+    }
+    if (selectElement.options.length > 1) {
+        questionContainer.innerText = ""
+        const h1 = document.createElement('h1')
+        h1.innerText = "Select new category which you want to play next within 10 Second"
+        h1.style.fontSize = "2rem"
+        questionContainer.appendChild(h1)
+        StartGameAgainIntervalID = setInterval(() => {
+            alert("Time is over! Quickly Select new category which you want to play next!");
+        },10000)
+
+    } else {
+        alert("You already played all category option!, There is no more category to play this game and this game is over");
+        setTimeout(()=>{
+            reload()  
+        },2000)
+        
+    }
     }
 
 function reload() {
