@@ -51,7 +51,7 @@ function showQuestion(data) {
     questionContainer.innerHTML = "";
     // console.log(data,count)
     const player = document.createElement('h2')
-    player.style.color = "pink";
+    player.style.color = "aqua";
     player.style.fontSize = "2rem";
 
     if (count % 2 == 0) {
@@ -66,6 +66,7 @@ function showQuestion(data) {
     const questionText = document.createElement('h2');
     questionText.innerHTML = `Question No ${count + 1}: ${data[0].question.text}`;
     questionContainer.appendChild(questionText);
+    console.log(`correcct answer ${ data[0].correctAnswer}`)
 
     //  Question ke option ke liye 
     const options = [...data[0].incorrectAnswers, data[0].correctAnswer].sort(() => Math.random() - 0.5);
@@ -135,7 +136,7 @@ function endGame() {
         highScore = player1Score
         winner = player1Name
     } else if (player1Score==player2Score) {
-        winner="No one, Because both score is same."
+        winner="No one, Because both score is same.Tied the game!"
     }
     else {
         highScore = player2Score
