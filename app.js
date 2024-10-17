@@ -22,7 +22,7 @@ async function getData(category, difficulties) {
     // console.log(data)
     showQuestion(data);
 }
-
+const categorySelector = document.getElementById('category-select');
 const formSubmitBtn = document.querySelector('#player-form');
 formSubmitBtn.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -31,8 +31,7 @@ formSubmitBtn.addEventListener('submit', (event) => {
     console.log(`Player 1: ${player1Name},Player 2: ${player2Name}`);
 
     formSubmitBtn.style.display = "none";
-    const categorySelect = document.getElementById('category-select');
-    categorySelect.style.display = "block";
+    categorySelector.style.display = "block";
 });
 
 const categorySelect = document.getElementById('categories');
@@ -43,6 +42,7 @@ categorySelect.addEventListener('change', (event) => {
         clearInterval(StartGameAgainIntervalID);
     }
     getData(selectedCategory, easy);
+    categorySelector.style.display = "none";
 });
 
 const questionContainer = document.getElementById('question-container');
@@ -51,7 +51,7 @@ function showQuestion(data) {
     questionContainer.innerHTML = "";
     // console.log(data,count)
     const player = document.createElement('h2')
-    player.style.color = "yellow";
+    player.style.color = "pink";
     player.style.fontSize = "2rem";
 
     if (count % 2 == 0) {
@@ -129,11 +129,15 @@ function showQuestion(data) {
 const finalScore = document.createElement('h2');
 
 function endGame() {
+    
     questionContainer.innerText = ""
     if (player1Score > player2Score) {
         highScore = player1Score
         winner = player1Name
-    } else {
+    } else if (player1Score==player2Score) {
+        winner="No one, Because both score is same."
+    }
+    else {
         highScore = player2Score
         winner = player2Name
     }
@@ -149,6 +153,7 @@ function endGame() {
 
     // if user wants to play again then he can play
     gameContinue.addEventListener('click', () => {
+        categorySelector.style.display = "block";
         count = 0;
         player1Score = 0;
         player2Score = 0;
