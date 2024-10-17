@@ -66,7 +66,6 @@ function showQuestion(data) {
     const questionText = document.createElement('h2');
     questionText.innerHTML = `Question No ${count + 1}: ${data[0].question.text}`;
     questionContainer.appendChild(questionText);
-    console.log(`correcct answer ${ data[0].correctAnswer}`)
 
     //  Question ke option ke liye 
     const options = [...data[0].incorrectAnswers, data[0].correctAnswer].sort(() => Math.random() - 0.5);
