@@ -6,20 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HVA Mini Hackathon 2.0 - Two-Player Trivia Battle Game</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- <link rel="stylesheet" href="./style.css"> -->
 
 </head>
 
 <body>
-    <div class="main-container">
-        <h1>Two Player Trivia Battle Game</h1>
-        <form id="player-form" action="./">
-            <input type="text" id="player1" placeholder="Enter Player1 Name" required>
-            <input type="text" id="player2" placeholder="Enter Player2 Name" required>
-            <button id="form-submit">Submit</button>
+    <div class="main-container w-screen h-screen flex flex-col justify-center items-center">
+        <div class="bg-slate-400 p-4 rounded-lg">
+            <h1 id="title" class="text-center text-2xl font-bold md:text-4xl mb-2">Trivia Battle Game</h1>
+        <form class="flex justify-center flex-col items-center" id="player-form" action="./">
+            <input class="border-2 border-black px-2 rounded-lg" type="text" id="player1" placeholder="Enter First Player Name" required>
+            <br>
+            <input class="border-2 border-black px-2 rounded-lg" type="text" id="player2" placeholder="Enter Second Player Name" required>
+            <br>
+            <button class="border-2 border-black px-2 bg-blue-200 rounded-lg" id="form-submit">Submit</button>
+            <hr>
         </form> 
-        <div id="category-select">
-            <h2>Select any one of the category for start playing game</h2>
-            <select id="categories">
+        <div id="category-select" class="hidden">
+            <h2 class="text-rose-700 text-2xl font-bold">Select any one of the category for start playing game</h2>
+            <select id="categories" class="rounded-lg">
                 <option value="Choose the category">Choose the category</option>
                 <option value="general_knowledge">General Knowlege</option>
                 <option value="geography" >Geography</option>
@@ -35,7 +41,9 @@
             </select>
         </div>
         <div id="question-container"></div>
-    </div>
+  
+        </div>
+          </div>
 
 </body>
 <script src="./app.js"></script>

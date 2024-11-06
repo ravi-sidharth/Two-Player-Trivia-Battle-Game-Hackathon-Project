@@ -19,41 +19,40 @@ async function getData(category, difficulties) {
     const data = await res.json();
     currentCategory = category
     playedCategories.push(category);
-    // console.log(data)
     showQuestion(data);
 }
 const categorySelector = document.getElementById('category-select');
-const formSubmitBtn = document.querySelector('#player-form');
+const formSubmitBtn = document.querySelector('#player-form')
 formSubmitBtn.addEventListener('submit', (event) => {
     event.preventDefault();
     player1Name = document.querySelector('#player1').value;
     player2Name = document.querySelector('#player2').value;
-    console.log(`Player 1: ${player1Name},Player 2: ${player2Name}`);
+    // console.log(`Player 1: ${player1Name},Player 2: ${player2Name}`);
+    const playersName = document.createElement('p')
+    playersName.className="text-xl text-white"
+    playersName.innerHTML = `Player 1:${player1Name} Vs Player 2:${player2Name}`
+    document.querySelector('#title').appendChild(playersName)
 
-    formSubmitBtn.style.display = "none";
-    categorySelector.style.display = "block";
+    formSubmitBtn.className = "hidden";
+    categorySelector.className = "block";
 });
 
 const categorySelect = document.getElementById('categories');
 categorySelect.addEventListener('change', (event) => {
     const selectedCategory = event.target.value;
-    // console.log(`Selected category: ${selectedCategory}`);
     if (StartGameAgainIntervalID) {
         clearInterval(StartGameAgainIntervalID);
     }
     getData(selectedCategory, easy);
-    categorySelector.style.display = "none";
+    categorySelector.className = "hidden";
 });
 
 const questionContainer = document.getElementById('question-container');
-
 function showQuestion(data) {
     questionContainer.innerHTML = "";
-    // console.log(data,count)
     const player = document.createElement('h2')
-    player.style.color = "aqua";
-    player.style.fontSize = "2rem";
-
+    player.className = "text-2xl text-yellow-300 font-bold";
+    
     if (count % 2 == 0) {
         player.innerText = `It's ${player1Name} your turn please select the correct answer.`
         questionContainer.prepend(player);
@@ -64,48 +63,51 @@ function showQuestion(data) {
     }
 
     const questionText = document.createElement('h2');
+    questionText.className="text-2xl font-bold"
     questionText.innerHTML = `Question No ${count + 1}: ${data[0].question.text}`;
     questionContainer.appendChild(questionText);
 
     //  Question ke option ke liye 
     const options = [...data[0].incorrectAnswers, data[0].correctAnswer].sort(() => Math.random() - 0.5);
     const optionList = document.createElement('ol');
+    let optionNumber =1
     options.forEach(option => {
         const list = document.createElement('li')
-        list.innerText = option;
+        list.innerHTML =` ${optionNumber}- ${option}`;
+        list.classList.add("hover:bg-blue-400", "mb-2","mt-2")
+        
+        optionNumber+=1
         optionList.appendChild(list);
         questionContainer.appendChild(optionList)
 
         // addEvent listener in option option is right or worng
         list.addEventListener('click', () => {
-            console.log(`Selected answer: ${option}`);
-
+            
             if (count % 2 == 0) {
                 if (option == data[0].correctAnswer) {
-                    // console.log("Correct answer!");
                     player1Score += dummyScore[count]
                     player.innerText = `Weldone your Answer is correct and now your score is ${player1Score}`;
-                    player.style.color = "green";
+                    player.classList.add("text-4xl", "font-bold", "text-green-400")
+                    list.classList.add = ("text-2xl", "font-bold", "text-green-400")
 
                 } else {
-                    // console.log("Incorrect answer.");
-                    player.innerText = `Your answer is incorrect and correct answer is ${data[0].correctAnswer}`;
-                    player.style.color = "red";
+                    player.innerText =`Your answer is incorrect and correct answer is ${data[0].correctAnswer}`;
+                    player.classList.add("text-4xl", "font-bold" ,"text-red-400")
+                    list.classList.add("text-2xl", "font-bold" ,"text-red-400")
+                    
 
                 }
             } else {
                 if (option == data[0].correctAnswer) {
-                    // console.log("Correct answer!");
                     player2Score += dummyScore[count]
-                    // console.log(dummyScore)
-                    // console.log(count)
                     player.innerText = `Weldone your Answer is correct and now your score is ${player2Score}`;
-                    player.style.color = "green";
+                    player.classList.add("text-4xl", "font-bold", "text-green-400")
+                    list.classList.add("text-2xl", "font-bold", "text-green-400")
 
                 } else {
-                    console.log("Incorrect answer.");
                     player.innerText = `Your answer is incorrect and correct answer is ${data[0].correctAnswer}`;
-                    player.style.color = "red";
+                    player.classList.add("text-4xl", "font-bold" ,"text-red-400")
+                    list.classList.add("text-2xl", "font-bold" ,"text-red-400")
                 }
             }
 
@@ -120,7 +122,7 @@ function showQuestion(data) {
                 } else {
                     endGame()
                 }
-            }, 1000);
+            }, 2000);
         });
     });
 }
@@ -147,6 +149,8 @@ function endGame() {
     const gameContinue = document.createElement('button');
     const gameEnd = document.createElement('button');
     gameContinue.innerText = "Play Again";
+    gameContinue.className ="border-2 border-black px-2 bg-green-400 rounded-lg"
+    gameEnd.className = "border-2 border-black px-2 bg-rose-400 rounded-lg"
     gameEnd.innerText = "End Game"
     questionContainer.appendChild(gameContinue);
     questionContainer.appendChild(gameEnd);
@@ -176,11 +180,12 @@ function showAgainQuestion() {
             }
         }
     }
+
     if (selectElement.options.length > 1) {
         questionContainer.innerText = ""
         const h1 = document.createElement('h1')
         h1.innerText = "Select new category which you want to play next within 10 Second"
-        h1.style.fontSize = "2rem"
+        h1.className= "text-4xl"
         questionContainer.appendChild(h1)
         StartGameAgainIntervalID = setInterval(() => {
             alert("Time is over!Please Select new category which you want to play next!");
@@ -192,7 +197,6 @@ function showAgainQuestion() {
             alert("You have completed all the level")
             reload()
         }, 4000)
-
     }
 }
 
