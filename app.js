@@ -27,7 +27,6 @@ formSubmitBtn.addEventListener('submit', (event) => {
     event.preventDefault();
     player1Name = document.querySelector('#player1').value;
     player2Name = document.querySelector('#player2').value;
-    // console.log(`Player 1: ${player1Name},Player 2: ${player2Name}`);
     const playersName = document.createElement('p')
     playersName.className="text-xl text-white"
     playersName.innerHTML = `Player 1:${player1Name} Vs Player 2:${player2Name}`
@@ -67,22 +66,21 @@ function showQuestion(data) {
     questionText.innerHTML = `Question No ${count + 1}: ${data[0].question.text}`;
     questionContainer.appendChild(questionText);
 
-    //  Question ke option ke liye 
+    //For question option and suffling
     const options = [...data[0].incorrectAnswers, data[0].correctAnswer].sort(() => Math.random() - 0.5);
     const optionList = document.createElement('ol');
     let optionNumber =1
     options.forEach(option => {
         const list = document.createElement('li')
         list.innerHTML =` ${optionNumber}- ${option}`;
-        list.classList.add("hover:bg-blue-400", "mb-2","mt-2")
         
         optionNumber+=1
         optionList.appendChild(list);
         questionContainer.appendChild(optionList)
 
         // addEvent listener in option option is right or worng
-        list.addEventListener('click', () => {
-            
+        list.classList.add("hover:bg-blue-400", "mb-2","mt-2")
+        list.addEventListener('click',()=> {
             if (count % 2 == 0) {
                 if (option == data[0].correctAnswer) {
                     player1Score += dummyScore[count]
@@ -95,7 +93,6 @@ function showQuestion(data) {
                     player.classList.add("text-4xl", "font-bold" ,"text-red-400")
                     list.classList.add("text-2xl", "font-bold" ,"text-red-400")
                     
-
                 }
             } else {
                 if (option == data[0].correctAnswer) {
@@ -127,11 +124,8 @@ function showQuestion(data) {
     });
 }
 
-
 const finalScore = document.createElement('h2');
-
 function endGame() {
-    
     questionContainer.innerText = ""
     if (player1Score > player2Score) {
         highScore = player1Score
@@ -150,7 +144,7 @@ function endGame() {
     const gameEnd = document.createElement('button');
     gameContinue.innerText = "Play Again";
     gameContinue.className ="border-2 border-black px-2 bg-green-400 rounded-lg"
-    gameEnd.className = "border-2 border-black px-2 bg-rose-400 rounded-lg"
+    gameEnd.className = "border-2 border-black px-2 bg-rose-400 rounded-lg ml-2"
     gameEnd.innerText = "End Game"
     questionContainer.appendChild(gameContinue);
     questionContainer.appendChild(gameEnd);
@@ -168,7 +162,6 @@ function endGame() {
     gameEnd.addEventListener('click', () => {
         reload();
     })
-
 }
 
 function showAgainQuestion() {
