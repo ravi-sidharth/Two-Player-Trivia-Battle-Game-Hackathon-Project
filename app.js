@@ -125,7 +125,6 @@ function showQuestion(data) {
     });
 }
 
-const finalScore = document.createElement('h2');
 function endGame() {
     questionContainer.innerText = ""
     const gameContinue = document.createElement('button');
@@ -139,15 +138,15 @@ function endGame() {
 
     //if user wants to play again then they can play
     gameContinue.addEventListener('click', () => {
-        categorySelector.style.display="block";
+        categorySelector.className="block";
         count = 0;
-        winner = ""
         showAgainQuestion()
     })
     // user wants to end the game 
     gameEnd.addEventListener('click', () => {
         questionContainer.innerText = ""
-    
+        const finalScore = document.createElement('h1');
+        finalScore.className="text-2xl font-medium text-blue-700 "
         if (player1Score > player2Score) {
             highScore = player1Score
             winner = player1Name
@@ -158,7 +157,7 @@ function endGame() {
             highScore = player2Score
             winner = player2Name
         }
-        finalScore.innerText = `Game Over! Player 1: ${player1Score}, Player 2: ${player2Score}, High Score: ${highScore} and Winner is ${winner}`;
+        finalScore.innerHTML = `Game Over! Player 1: ${player1Score}, Player 2: ${player2Score}, High Score: ${highScore} and <span class="text-4xl font-bold text-green-400">Winner is ${winner}</span>`;
         questionContainer.appendChild(finalScore);
 
         setTimeout(()=> {
